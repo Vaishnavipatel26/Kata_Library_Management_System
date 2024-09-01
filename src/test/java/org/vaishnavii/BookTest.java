@@ -24,4 +24,10 @@ public class BookTest {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new Book("9780132350884", "Clean Code", "", Year.of(2012)));
         assertEquals("author should not be null or empty", exception.getMessage());
     }
+
+    @Test
+    public void throwExceptionWhenPublicationYearIsNull() {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new Book("9780132350884", "Clean Code", "Robert Cecil Martin", null));
+        assertEquals("publication year should not be null", exception.getMessage());
+    }
 }
