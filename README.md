@@ -14,6 +14,7 @@ A simple library management system that allows users to perform basic operations
     - [Import Project into IntelliJ IDEA](#import-project-into-intellij-idea)
     - [Build the Project](#build-the-project)
     - [Running Tests](#running-tests)
+ - [Test Coverage](#test-coverage)
 
 ## Problem Statement
 
@@ -130,6 +131,10 @@ This project follows TDD principles to solve the kata problem. The solution is b
 ### Running Tests
 
 - To run the tests, navigate to the `LibraryTest` class and click on the run button.
+
+### Test Coverage
+
+![Test Coverage Screenshot](Test-Coverage.png) 
 
 
 
