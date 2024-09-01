@@ -19,6 +19,14 @@ public class Library {
         this.userCatalog = new HashMap<String, User>();
     }
 
+    public void addUser(User user) {
+        userCatalog.put(user.getUserName(), user);
+    }
+
+    public User getUserByName(String userName) {
+        return userCatalog.get(userName);
+    }
+
     public void addBook(User user, Book book) {
         if(user.isPermittedToAddBook()){
             bookInventory.put(book.getISBN(), book);
