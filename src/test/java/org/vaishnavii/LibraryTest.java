@@ -65,4 +65,15 @@ public class LibraryTest {
         User user = library.getUserByName("Patel");
         assertEquals(librarian, user);
     }
+
+    @Test
+    public void testShouldNotAllowDuplicateUsers() {
+        Library library = new Library("Vaishnavi");
+        User primaryLibrarian = new User("Patel", Role.LIBRARIAN);
+        User secondaryLibrarian = new User("Patel", Role.LIBRARIAN);
+
+        library.addUser(primaryLibrarian);
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> library.addUser(secondaryLibrarian));
+        assertEquals("User already exists in catalog", exception.getMessage());
+    }
 }
