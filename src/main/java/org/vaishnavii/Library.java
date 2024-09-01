@@ -1,4 +1,6 @@
 package org.vaishnavii;
+import org.vaishnavii.exceptions.PermissionDeniedException;
+
 import java.util.*;
 
 public class Library {
@@ -19,7 +21,7 @@ public class Library {
         if(user.isPermittedToAddBook()){
             bookInventory.put(book.getISBN(), book);
         } else {
-            throw new SecurityException("You are not authorized to add book");
+            throw new PermissionDeniedException("You are not authorized to add book");
         }
     }
 

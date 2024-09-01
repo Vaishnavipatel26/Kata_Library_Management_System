@@ -1,6 +1,7 @@
 package org.vaishnavii;
 
 import org.junit.jupiter.api.Test;
+import org.vaishnavii.exceptions.PermissionDeniedException;
 
 import java.time.Year;
 
@@ -32,7 +33,7 @@ public class LibraryTest {
     @Test
     public void testShouldAllowOnlyPermittedUserToAddBook() {
         Library library = new Library("Vaishnavi");
-        User user = new User("Rizwan", Role.LIBRARIAN);
+        User user = new User("Patel", Role.LIBRARIAN);
 
         Book book = new Book("9780132350884", "Clean Code", "Robert Cecil Martin", Year.of(2012));
 
@@ -47,10 +48,10 @@ public class LibraryTest {
     @Test
     public void throwExceptionIfUnauthorizedUserAddBook() {
         Library library = new Library("Vaishnavi");
-        User user = new User("Rizwan", Role.USER);
+        User user = new User("Patel", Role.USER);
 
         Book book = new Book("9780132350884", "Clean Code", "Robert Cecil Martin", Year.of(2012));
-        SecurityException exceptionMessage = assertThrows(SecurityException.class, () -> library.addBook(user, book));
-        assertEquals("You are not authorized to add book", exceptionMessage.getMessage());
+        PermissionDeniedException exception = assertThrows(PermissionDeniedException.class, () -> library.addBook(user, book));
+        assertEquals("You are not authorized to add book", exception.getMessage());
     }
 }
