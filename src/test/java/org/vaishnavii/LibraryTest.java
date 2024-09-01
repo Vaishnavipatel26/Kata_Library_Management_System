@@ -76,4 +76,14 @@ public class LibraryTest {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> library.addUser(secondaryLibrarian));
         assertEquals("User already exists in catalog", exception.getMessage());
     }
+
+    @Test
+    public void testShouldFetchUserByUsername() {
+        Library library = new Library("Vaishnavi");
+        User primaryLibrarian = new User("Patel", Role.LIBRARIAN);
+
+        library.addUser(primaryLibrarian);
+        User fetchedUser = library.getUserByName("Patel");
+        assertEquals(primaryLibrarian, fetchedUser);
+    }
 }
