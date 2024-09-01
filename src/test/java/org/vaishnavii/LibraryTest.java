@@ -146,4 +146,23 @@ public class LibraryTest {
         assertEquals("Book not found", exception.getMessage());
     }
 
+    @Test
+    public void testShouldThrowExceptionWhenBookIsAlreadyBorrowed() {
+
+        User librarian = new User("Patel", Role.LIBRARIAN);
+        User user1 = new User("Patil", Role.USER);
+        User user2 = new User("Soni", Role.USER);
+        Book book = new Book("9780132350884", "Clean Code", "Robert Cecil Martin", Year.of(2012));
+
+        library.addUser(librarian);
+        library.addUser(user1);
+        library.addUser(user2);
+        library.addBook(librarian, book);
+
+        library.borrowBook(user1, "9780132350884");
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> library.borrowBook(user2, "9780132350884"));
+        assertEquals("Book is already borrowed", exception.getMessage());
+    }
+
 }
