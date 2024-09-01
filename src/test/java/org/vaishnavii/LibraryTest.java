@@ -216,4 +216,18 @@ public class LibraryTest {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> library.returnBook(user2, "9780132350884"));
         assertEquals("book was not borrowed by this user", exception.getMessage());
     }
+
+    @Test
+    public void testShouldThrowExceptionWhenNoOneBorrowedBook() {
+        User librarian = new User("Patel", Role.LIBRARIAN);
+        User user1 = new User("Patil", Role.USER);
+        Book book = new Book("9780132350884", "Clean Code", "Robert Cecil Martin", Year.of(2012));
+
+        library.addUser(librarian);
+        library.addUser(user1);
+        library.addBook(librarian, book);
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> library.returnBook(user1, "9780132350884"));
+        assertEquals("Book was not borrowed by any user", exception.getMessage());
+    }
 }
