@@ -9,9 +9,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class LibraryTest {
 
+    Library library = new Library("Vaishnavi");
     @Test
     public void testFailWithoutProperConstructor() {
-        Library library = new Library("Vaishnavi");
+
         assertNotNull(library);
     }
 
@@ -32,7 +33,7 @@ public class LibraryTest {
 
     @Test
     public void testShouldAllowOnlyPermittedUserToAddBook() {
-        Library library = new Library("Vaishnavi");
+
         User user = new User("Patel", Role.LIBRARIAN);
 
         Book book = new Book("9780132350884", "Clean Code", "Robert Cecil Martin", Year.of(2012));
@@ -47,7 +48,7 @@ public class LibraryTest {
 
     @Test
     public void throwExceptionIfUnauthorizedUserAddBook() {
-        Library library = new Library("Vaishnavi");
+
         User user = new User("Patel", Role.USER);
 
         Book book = new Book("9780132350884", "Clean Code", "Robert Cecil Martin", Year.of(2012));
@@ -57,7 +58,7 @@ public class LibraryTest {
 
     @Test
     public void testShouldAddUserToLibrary() {
-        Library library = new Library("Vaishnavi");
+
         User librarian = new User("Patel", Role.LIBRARIAN);
 
         library.addUser(librarian);
@@ -68,7 +69,7 @@ public class LibraryTest {
 
     @Test
     public void testShouldNotAllowDuplicateUsers() {
-        Library library = new Library("Vaishnavi");
+
         User primaryLibrarian = new User("Patel", Role.LIBRARIAN);
         User secondaryLibrarian = new User("Patel", Role.LIBRARIAN);
 
@@ -79,7 +80,7 @@ public class LibraryTest {
 
     @Test
     public void testShouldFetchUserByUsername() {
-        Library library = new Library("Vaishnavi");
+        
         User primaryLibrarian = new User("Patel", Role.LIBRARIAN);
 
         library.addUser(primaryLibrarian);
