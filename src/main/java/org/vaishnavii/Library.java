@@ -39,6 +39,10 @@ public class Library {
         }
     }
 
+    public Map<String, Book> viewAvailableBooks() {
+        return new HashMap<>(bookInventory);
+    }
+
     public Book getBookByISBN(String isbn) {
         return bookInventory.get(isbn);
     }
