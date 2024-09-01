@@ -44,4 +44,17 @@ public class Book{
     public Year getPublicationYear() {
         return publicationYear;
     }
+
+    @Override
+    public boolean equals(Object object) {
+        if(this == object) return true;
+        if(object == null || (this.getClass() != object.getClass())) return false;
+        Book book = (Book) object;
+        return isbn.equals(book.isbn);
+    }
+
+    @Override
+    public int hashCode() {
+        return isbn.hashCode();
+    }
 }
