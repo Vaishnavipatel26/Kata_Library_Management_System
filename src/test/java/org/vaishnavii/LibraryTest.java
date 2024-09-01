@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.vaishnavii.exceptions.PermissionDeniedException;
 
 import java.time.Year;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -80,11 +81,28 @@ public class LibraryTest {
 
     @Test
     public void testShouldFetchUserByUsername() {
-        
+
         User primaryLibrarian = new User("Patel", Role.LIBRARIAN);
 
         library.addUser(primaryLibrarian);
         User fetchedUser = library.getUserByName("Patel");
         assertEquals(primaryLibrarian, fetchedUser);
+    }
+
+    @Test
+    public void testShouldRetrieveAllAvailableBooks() {
+        User librarian = new User("Patel", Role.LIBRARIAN);
+        Book book1 = new Book("9780132350884", "Clean Code", "Robert Cecil Martin", Year.of(2012));
+        Book book2 = new Book("9780134685991", "Effective Java", "Joshua Bloch", Year.of(2018));
+
+        library.addUser(librarian);
+        library.addBook(librarian, book1);
+        library.addBook(librarian, book2);
+
+        Map<String, Book> availableBooks = library.viewAvailableBooks();
+
+        assertEquals(2, availableBooks.size());
+        assertTrue(availableBooks.containsKey("9780132350884"));
+        assertTrue(availableBooks.containsKey("9780134685991"));
     }
 }
