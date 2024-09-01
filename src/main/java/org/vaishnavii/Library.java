@@ -29,8 +29,17 @@ public class Library {
         userCatalog.put(user.getUserName(), user);
     }
 
+    private boolean isBookBorrowedBySomeUser(String isbn) {
+        return borrowedBooks.containsKey(isbn);
+    }
+
+
     public void borrowBook(User user, String isbn) {
         Book book = bookInventory.get(isbn);
+
+        if(isBookBorrowedBySomeUser(isbn)) {
+            throw new IllegalArgumentException("Book is already borrowed");
+        }
         if(book == null){
             throw new IllegalArgumentException("Book not found");
         }
