@@ -21,4 +21,9 @@ public class LibraryTest {
     public void testLibraryNameShouldNotBeEmpty() {
         assertThrows(IllegalArgumentException.class, () -> new Library(""));
     }
+
+    @Test
+    public void testLibraryNameShouldBeGreaterThan4Characters() {
+        assertThrows(IllegalArgumentException.class, () -> new Library("Vais"));
+    }
 }
