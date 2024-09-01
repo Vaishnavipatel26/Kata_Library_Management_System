@@ -122,7 +122,7 @@ public class LibraryTest {
     @Test
     public void testShouldAllowToBorrowBookFromLibrary() {
         User librarian = new User("Patel", Role.LIBRARIAN);
-        User user = new User("Patel", Role.USER);
+        User user = new User("Patil", Role.USER);
         Book book = new Book("9780132350884", "Clean Code", "Robert Cecil Martin", Year.of(2012));
 
         library.addUser(librarian);

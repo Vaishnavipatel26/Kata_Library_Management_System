@@ -8,6 +8,7 @@ public class Library {
     String name;
     private final Map<String, Book> bookInventory;
     private final Map<String, User> userCatalog;
+    private final Map<String, String> borrowedBooks;
 
     public Library(String name) {
 
@@ -17,6 +18,7 @@ public class Library {
         this.name = name;
         this.bookInventory = new HashMap<String, Book>();
         this.userCatalog = new HashMap<String, User>();
+        this.borrowedBooks = new HashMap<String, String>();
     }
 
     public void addUser(User user) {
@@ -25,6 +27,12 @@ public class Library {
             throw new IllegalArgumentException("User already exists in catalog");
         }
         userCatalog.put(user.getUserName(), user);
+    }
+
+    public void borrowBook(User user, String isbn) {
+        Book book = bookInventory.get(isbn);
+        borrowedBooks.put(isbn, user.getUserName());
+        bookInventory.remove(isbn);
     }
 
     public User getUserByName(String userName) {
