@@ -52,6 +52,9 @@ public class Library {
     }
 
     public void returnBook(User user, String isbn) {
+        if(!borrowedBooks.containsKey(isbn)) {
+            throw new IllegalArgumentException("Book was not borrowed by any user");
+        }
         if( !user.getUserName().equals(borrowedBooks.get(isbn))){
             throw new IllegalArgumentException("book was not borrowed by this user");
         }
