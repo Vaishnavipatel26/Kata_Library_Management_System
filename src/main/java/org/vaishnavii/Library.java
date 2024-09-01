@@ -15,8 +15,12 @@ public class Library {
         this.bookInventory = new HashMap<String, Book>();
     }
 
-    public void addBook(Book book) {
-        bookInventory.put(book.getISBN(), book);
+    public void addBook(User user, Book book) {
+        if(user.isPermittedToAddBook()){
+            bookInventory.put(book.getISBN(), book);
+        } else {
+            throw new SecurityException("You are not authorized to add book");
+        }
     }
 
     public Book getBookByISBN(String isbn) {
