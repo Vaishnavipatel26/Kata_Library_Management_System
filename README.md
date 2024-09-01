@@ -14,7 +14,6 @@ A simple library management system that allows users to perform basic operations
     - [Import Project into IntelliJ IDEA](#import-project-into-intellij-idea)
     - [Build the Project](#build-the-project)
     - [Running Tests](#running-tests)
-- [Test Coverage](#test-coverage)
 
 ## Problem Statement
 
