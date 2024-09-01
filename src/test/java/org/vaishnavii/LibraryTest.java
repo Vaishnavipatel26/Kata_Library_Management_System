@@ -105,4 +105,17 @@ public class LibraryTest {
         assertTrue(availableBooks.containsKey("9780132350884"));
         assertTrue(availableBooks.containsKey("9780134685991"));
     }
+
+    @Test
+    public void testShouldReturnUnmodifiableHashMap() {
+        User librarian = new User("Patel", Role.LIBRARIAN);
+        Book book1 = new Book("9780132350884", "Clean Code", "Robert Cecil Martin", Year.of(2012));
+
+        library.addUser(librarian);
+        library.addBook(librarian, book1);
+
+        Map<String, Book> availableBooks = library.viewAvailableBooks();
+
+        assertThrows(UnsupportedOperationException.class, () -> availableBooks.put("9780134685991", new Book("9780134685991", "Effective Java", "Joshua Bloch", Year.of(2018))));
+    }
 }
