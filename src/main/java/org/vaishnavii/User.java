@@ -3,9 +3,9 @@ package org.vaishnavii;
 public class User {
 
     private String userName;
-    private String role;
+    private Role role;
 
-    public User(String userName, String role) {
+    public User(String userName, Role role) {
         this.userName = userName;
         this.role = role;
     }
@@ -14,12 +14,12 @@ public class User {
         return userName;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
     public boolean isPermittedToAddBook() {
-        return "Librarian".equalsIgnoreCase(role);
+        return role == Role.LIBRARIAN;
     }
 
 }
