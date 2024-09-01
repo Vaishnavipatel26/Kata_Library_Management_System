@@ -60,6 +60,10 @@ public class Library {
         }
     }
 
+    public String getBorrowerNameByISBN(String isbn) {
+        return borrowedBooks.get(isbn);
+    }
+
     public Map<String, Book> viewAvailableBooks() {
         return Collections.unmodifiableMap(new HashMap<>(bookInventory));
     }
