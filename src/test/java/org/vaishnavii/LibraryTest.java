@@ -17,4 +17,8 @@ public class LibraryTest {
         assertThrows(IllegalArgumentException.class, () -> new Library(null));
     }
 
+    @Test
+    public void testLibraryNameShouldNotBeEmpty() {
+        assertThrows(IllegalArgumentException.class, () -> new Library(""));
+    }
 }
