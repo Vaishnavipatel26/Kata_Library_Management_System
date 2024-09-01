@@ -32,7 +32,7 @@ public class LibraryTest {
     @Test
     public void testShouldAllowOnlyPermittedUserToAddBook() {
         Library library = new Library("Vaishnavi");
-        User user = new User("Patel", "librarian");
+        User user = new User("Rizwan", Role.LIBRARIAN);
 
         Book book = new Book("9780132350884", "Clean Code", "Robert Cecil Martin", Year.of(2012));
 
@@ -47,7 +47,7 @@ public class LibraryTest {
     @Test
     public void throwExceptionIfUnauthorizedUserAddBook() {
         Library library = new Library("Vaishnavi");
-        User user = new User("Patel", "user");
+        User user = new User("Rizwan", Role.USER);
 
         Book book = new Book("9780132350884", "Clean Code", "Robert Cecil Martin", Year.of(2012));
         SecurityException exceptionMessage = assertThrows(SecurityException.class, () -> library.addBook(user, book));
