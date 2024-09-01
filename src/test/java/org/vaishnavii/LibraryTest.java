@@ -1,7 +1,10 @@
 package org.vaishnavii;
 
 import org.junit.jupiter.api.Test;
+import org.vaishnavii.exceptions.BookAlreadyBorrowedException;
+import org.vaishnavii.exceptions.BookNotFoundException;
 import org.vaishnavii.exceptions.PermissionDeniedException;
+import org.vaishnavii.exceptions.UserExistsException;
 
 import java.time.Year;
 import java.util.Map;
@@ -30,6 +33,11 @@ public class LibraryTest {
     @Test
     public void testLibraryNameShouldBeGreaterThan4Characters() {
         assertThrows(IllegalArgumentException.class, () -> new Library("Vais"));
+    }
+    @Test
+    public void testShouldThrowExceptionIfUserIsNull() {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> library.addUser(null));
+        assertEquals("User should not be null", exception.getMessage());
     }
 
     @Test
@@ -75,7 +83,7 @@ public class LibraryTest {
         User secondaryLibrarian = new User("Patel", Role.LIBRARIAN);
 
         library.addUser(primaryLibrarian);
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> library.addUser(secondaryLibrarian));
+        UserExistsException exception = assertThrows(UserExistsException.class, () -> library.addUser(secondaryLibrarian));
         assertEquals("User already exists in catalog", exception.getMessage());
     }
 
@@ -142,7 +150,7 @@ public class LibraryTest {
 
         library.addUser(user);
 
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> library.borrowBook(user, "9780132350884"));
+        BookNotFoundException exception = assertThrows(BookNotFoundException.class, () -> library.borrowBook(user, "9780132350884"));
         assertEquals("Book not found", exception.getMessage());
     }
 
@@ -161,7 +169,7 @@ public class LibraryTest {
 
         library.borrowBook(user1, "9780132350884");
 
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> library.borrowBook(user2, "9780132350884"));
+        BookAlreadyBorrowedException exception = assertThrows(BookAlreadyBorrowedException.class, () -> library.borrowBook(user2, "9780132350884"));
         assertEquals("Book is already borrowed", exception.getMessage());
     }
 
@@ -227,7 +235,7 @@ public class LibraryTest {
         library.addUser(user1);
         library.addBook(librarian, book);
 
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> library.returnBook(user1, "9780132350884"));
+        BookNotFoundException exception = assertThrows(BookNotFoundException.class, () -> library.returnBook(user1, "9780132350884"));
         assertEquals("Book was not borrowed by any user", exception.getMessage());
     }
 }

@@ -1,7 +1,14 @@
 package org.vaishnavii;
+import org.vaishnavii.exceptions.BookAlreadyBorrowedException;
+import org.vaishnavii.exceptions.BookNotFoundException;
 import org.vaishnavii.exceptions.PermissionDeniedException;
+import org.vaishnavii.exceptions.UserExistsException;
 
 import java.util.*;
+
+import static org.vaishnavii.utils.BookValidator.validateBookNotNull;
+import static org.vaishnavii.utils.StringValidator.validateString;
+import static org.vaishnavii.utils.UserValidator.validateUser;
 
 public class Library {
 
@@ -12,9 +19,9 @@ public class Library {
     private final Map<String, Book> borrowedBookDetails;
 
     public Library(String name) {
-
-        if(name == null || name.isBlank() || name.length() <= 4) {
-            throw new IllegalArgumentException("Library Name Should not be null or empty or should have atleast 4 characters");
+        validateString(name, "Library Name Should not be null or empty");
+        if(name.length() <= 4) {
+            throw new IllegalArgumentException("Library Name Should have at least 4 characters");
         }
         this.name = name;
         this.bookInventory = new HashMap<String, Book>();
@@ -24,27 +31,40 @@ public class Library {
     }
 
     public void addUser(User user) {
-
+        validateUser(user, "User should not be null");
         if(userCatalog.containsKey(user.getUserName())){
-            throw new IllegalArgumentException("User already exists in catalog");
+            throw new UserExistsException("User already exists in catalog");
         }
         userCatalog.put(user.getUserName(), user);
+    }
+
+    public User getUserByName(String userName) {
+        return userCatalog.get(userName);
+    }
+
+    public void addBook(User user, Book book) {
+        validateUser(user, "User should not be null");
+        validateBookNotNull(book,"Book not found");
+        if(user.isPermittedToAddBook()){
+            bookInventory.put(book.getISBN(), book);
+        } else {
+            throw new PermissionDeniedException("You are not authorized to add book");
+        }
     }
 
     private boolean isBookBorrowedBySomeUser(String isbn) {
         return borrowedBooks.containsKey(isbn);
     }
 
-
     public void borrowBook(User user, String isbn) {
+        validateUser(user, "User should not be null");
         Book book = bookInventory.get(isbn);
 
         if(isBookBorrowedBySomeUser(isbn)) {
-            throw new IllegalArgumentException("Book is already borrowed");
+            throw new BookAlreadyBorrowedException("Book is already borrowed");
         }
-        if(book == null){
-            throw new IllegalArgumentException("Book not found");
-        }
+
+        validateBookNotNull(book,"Book not found");
 
         borrowedBooks.put(isbn, user.getUserName());
         borrowedBookDetails.put(isbn, book);
@@ -52,8 +72,9 @@ public class Library {
     }
 
     public void returnBook(User user, String isbn) {
+        validateUser(user, "User should not be null");
         if(!borrowedBooks.containsKey(isbn)) {
-            throw new IllegalArgumentException("Book was not borrowed by any user");
+            throw new BookNotFoundException("Book was not borrowed by any user");
         }
         if( !user.getUserName().equals(borrowedBooks.get(isbn))){
             throw new IllegalArgumentException("book was not borrowed by this user");
@@ -63,19 +84,6 @@ public class Library {
         borrowedBooks.remove(isbn);
     }
 
-
-    public User getUserByName(String userName) {
-        return userCatalog.get(userName);
-    }
-
-    public void addBook(User user, Book book) {
-        if(user.isPermittedToAddBook()){
-            bookInventory.put(book.getISBN(), book);
-        } else {
-            throw new PermissionDeniedException("You are not authorized to add book");
-        }
-    }
-
     public String getBorrowerNameByISBN(String isbn) {
         return borrowedBooks.get(isbn);
     }
@@ -83,6 +91,7 @@ public class Library {
     public Map<String, Book> viewAvailableBooks() {
         return Collections.unmodifiableMap(new HashMap<>(bookInventory));
     }
+
     public Book getBookByISBNFromBorrowedBook(String isbn) {
         return borrowedBookDetails.get(isbn);
     }
