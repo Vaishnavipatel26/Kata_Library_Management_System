@@ -54,4 +54,15 @@ public class LibraryTest {
         PermissionDeniedException exception = assertThrows(PermissionDeniedException.class, () -> library.addBook(user, book));
         assertEquals("You are not authorized to add book", exception.getMessage());
     }
+
+    @Test
+    public void testShouldAddUserToLibrary() {
+        Library library = new Library("Vaishnavi");
+        User librarian = new User("Patel", Role.LIBRARIAN);
+
+        library.addUser(librarian);
+
+        User user = library.getUserByName("Patel");
+        assertEquals(librarian, user);
+    }
 }
