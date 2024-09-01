@@ -52,6 +52,9 @@ public class Library {
     }
 
     public void returnBook(User user, String isbn) {
+        if( !user.getUserName().equals(borrowedBooks.get(isbn))){
+            throw new IllegalArgumentException("book was not borrowed by this user");
+        }
         Book book = getBookByISBNFromBorrowedBook(isbn);
         bookInventory.put(isbn, book);
         borrowedBooks.remove(isbn);
