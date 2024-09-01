@@ -6,7 +6,7 @@ public class Library {
 
     public Library(String name) {
 
-        if(name == null) {
+        if(name == null || name.isBlank()) {
             throw new IllegalArgumentException("Library Name Should not be null");
         }
         this.name = name;
