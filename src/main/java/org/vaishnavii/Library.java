@@ -20,6 +20,10 @@ public class Library {
     }
 
     public void addUser(User user) {
+
+        if(userCatalog.containsKey(user.getUserName())){
+            throw new IllegalArgumentException("User already exists in catalog");
+        }
         userCatalog.put(user.getUserName(), user);
     }
 
