@@ -14,12 +14,9 @@ public class User {
         return userName;
     }
 
-    public Role getRole() {
-        return role;
-    }
-
     public boolean isPermittedToAddBook() {
         return role == Role.LIBRARIAN;
     }
+
 
 }
